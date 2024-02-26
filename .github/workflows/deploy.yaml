@@ -21,7 +21,7 @@ jobs:
       - name: Run command
         shell: bash
         run: |
-            git push try_vyper:try.vyperlang.org/
+            git push --force try_vyper:try.vyperlang.org/
             ssh try_vyper bash <<EOF
             cd try.vyperlang.org
             ./full_reload.sh
