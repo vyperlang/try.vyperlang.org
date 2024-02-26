@@ -1,0 +1,28 @@
+name: Update
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # Run Monday at 4:00 UTC
+    - cron: "0 4 * * 1"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: "Upgrade try.vyperlang.org"
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup SSH
+        uses: ./.github/workflows/setup-ssh
+        with:
+          ssh-key: ${{ secrets.TRY_VYPER_KEY }}
+          username: ${{ secrets.TRY_VYPERLANG_USER }}
+          host-key: ${{ vars.TRY_VYPERLANG_HOSTKEY }}
+      - name: Run command
+        shell: bash
+        run: |
+            ssh try_vyper bash <<EOF
+            apt-get update
+            apt-get upgrade -y
+            EOF

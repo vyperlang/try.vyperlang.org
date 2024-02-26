@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: "Deploy to try.vyperlang.org"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # we cannot push without the history
+      - name: Setup SSH
+        uses: ./.github/workflows/setup-ssh
+        with:
+          ssh-key: ${{ secrets.TRY_VYPER_KEY }}
+          username: ${{ secrets.TRY_VYPERLANG_USER }}
+          host-key: ${{ vars.TRY_VYPERLANG_HOSTKEY }}
+      - name: Run command
+        shell: bash
+        run: |
+            git push try_vyper:try.vyperlang.org/
+            ssh try_vyper bash <<EOF
+            cd try.vyperlang.org
+            ./full_reload.sh
+            EOF
