@@ -1,12 +1,18 @@
 name: Deploy
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+     environment:
+        type: environment
+        description: Select the environment
 
 jobs:
   deploy:
+    name: "Deploy to ${{ inputs.environment }}"
+    environment:
+      name: ${{ inputs.environment }}
     runs-on: ubuntu-latest
-    name: "Deploy to try.vyperlang.org"
 
     steps:
       - uses: actions/checkout@v4
@@ -18,11 +24,12 @@ jobs:
           ssh-key: ${{ secrets.TRY_VYPER_KEY }}
           username: ${{ secrets.TRY_VYPERLANG_USER }}
           host-key: ${{ vars.TRY_VYPERLANG_HOSTKEY }}
+          host-name: ${{ vars.TRY_VYPERLANG_HOST }}
       - name: Run command
         shell: bash
         run: |
-            git push --force try_vyper:try.vyperlang.org/
+            git push --force try_vyper:${{ vars.TRY_VYPERLANG_HOST }}/
             ssh try_vyper bash <<EOF
-            cd try.vyperlang.org
+            cd ${{ vars.TRY_VYPERLANG_HOST }}
             ./full_reload.sh
             EOF

@@ -19,11 +19,14 @@ jobs:
           ssh-key: ${{ secrets.TRY_VYPER_KEY }}
           username: ${{ secrets.TRY_VYPERLANG_USER }}
           host-key: ${{ vars.TRY_VYPERLANG_HOSTKEY }}
+          # do not use environments as GitHub marks every use as a deployment
+          host-name: try.vyperlang.org
       - name: Run command
         shell: bash
         run: |
             ssh try_vyper bash <<EOF
-            cd try.vyperlang.org
-            docker compose down
-            docker compose up --detach
+            cd ~/try.vyperlang.org
+            ./restart.sh
+            cd ~/beta.vyperlang.org
+            ./restart.sh
             EOF

@@ -9,7 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: "Upgrade try.vyperlang.org"
+    name: "Upgrade dependencies"
 
     steps:
       - uses: actions/checkout@v4
@@ -19,6 +19,8 @@ jobs:
           ssh-key: ${{ secrets.TRY_VYPER_KEY }}
           username: ${{ secrets.TRY_VYPERLANG_USER }}
           host-key: ${{ vars.TRY_VYPERLANG_HOSTKEY }}
+          # do not use environments as GitHub marks every use as a deployment
+          host-name: try.vyperlang.org
       - name: Run command
         shell: bash
         run: |
