@@ -9,7 +9,7 @@ services:
       args:
         FORK: ${FORK:-vyperlang}
         REF: ${REF:-vyper-0.4.0}
-    image: titanoboa-beta-notebook
+    image: ${NOTEBOOK_NAME:-titanoboa-notebook}
     command: ["echo", "This image is started by Jupyter"]
 
   vypyter:
@@ -27,11 +27,11 @@ services:
       # Bind Docker volume on host for JupyterHub database and cookie secrets
       - "./data:/data"
 
-    image: jupyterhub-beta
+    image: ${HUB_NAME:-jupyterhub}
     # for child processes to connect to
-    container_name: jupyterhub-beta
+    container_name: ${HUB_NAME:-jupyterhub}
     networks:
-      - jupyterhub-beta-network
+      - jupyterhub-network
 
     ports:
       - "${PORT:-9000}:8000"
@@ -39,11 +39,11 @@ services:
     env_file: .env
     environment:
       # Pass its own IP for the notebooks to connect to
-      HUB_CONNECT_IP: jupyterhub-beta
+      HUB_CONNECT_IP: ${HUB_NAME:-jupyterhub}
       # All containers will join this network
-      DOCKER_NETWORK_NAME: jupyterhub-beta-network
+      DOCKER_NETWORK_NAME: ${HUB_NAME:-jupyterhub}-network
       # JupyterHub will spawn this Notebook image for users
-      DOCKER_NOTEBOOK_IMAGE: titanoboa-beta-notebook
+      DOCKER_NOTEBOOK_IMAGE: ${NOTEBOOK_NAME:-titanoboa-notebook}
       # Using this run command
       DOCKER_SPAWN_CMD: start-singleuser.sh
       # weird things happen when nesting docker containers
@@ -51,5 +51,5 @@ services:
       PWD: "${PWD}"
 
 networks:
-  jupyterhub-beta-network:
-    name: jupyterhub-beta-network
+  jupyterhub-network:
+    name: ${HUB_NAME:-jupyterhub}-network
