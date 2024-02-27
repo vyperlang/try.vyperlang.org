@@ -38,6 +38,8 @@ services:
 
     env_file: .env
     environment:
+      # Pass its own IP for the notebooks to connect to
+      HUB_CONNECT_IP: jupyterhub-beta
       # All containers will join this network
       DOCKER_NETWORK_NAME: jupyterhub-beta-network
       # JupyterHub will spawn this Notebook image for users

@@ -88,7 +88,7 @@ c.DockerSpawner.cpu_limit = 1
 
 # User containers will access hub by container name on the Docker network
 c.JupyterHub.hub_ip = "0.0.0.0"
-c.JupyterHub.hub_connect_ip = "jupyterhub"  # not sure this is necessary
+c.JupyterHub.hub_connect_ip = os.environ.get("HUB_CONNECT_IP", "jupyterhub")
 
 # add an announcement to all pages. See https://github.com/jupyterhub/jupyterhub/blob/135be72470b/docs/source/howto/templates.md?plain=1#L68
 c.JupyterHub.template_vars = {
