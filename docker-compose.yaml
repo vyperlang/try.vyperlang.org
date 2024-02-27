@@ -8,7 +8,7 @@ services:
       dockerfile: notebook.Dockerfile
       args:
         FORK: ${FORK:-vyperlang}
-        REF: ${REF:-vyper-0.4.0}
+        REF: ${REF:-master}
     image: ${NOTEBOOK_NAME:-titanoboa-notebook}
     command: ["echo", "This image is started by Jupyter"]
 
