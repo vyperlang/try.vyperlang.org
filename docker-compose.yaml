@@ -29,9 +29,9 @@ services:
 
     image: jupyterhub-beta
     # for child processes to connect to
-    container_name: jupyterhub
+    container_name: jupyterhub-beta
     networks:
-      - jupyterhub-network
+      - jupyterhub-beta-network
 
     ports:
       - "${PORT:-9000}:8000"
@@ -39,7 +39,7 @@ services:
     env_file: .env
     environment:
       # All containers will join this network
-      DOCKER_NETWORK_NAME: jupyterhub-network
+      DOCKER_NETWORK_NAME: jupyterhub-beta-network
       # JupyterHub will spawn this Notebook image for users
       DOCKER_NOTEBOOK_IMAGE: titanoboa-beta-notebook
       # Using this run command
@@ -49,5 +49,5 @@ services:
       PWD: "${PWD}"
 
 networks:
-  jupyterhub-network:
-    name: jupyterhub-network
+  jupyterhub-beta-network:
+    name: jupyterhub-beta-network
