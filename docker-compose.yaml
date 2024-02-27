@@ -8,8 +8,8 @@ services:
       dockerfile: notebook.Dockerfile
       args:
         FORK: ${FORK:-vyperlang}
-        REF: ${REF:-master}
-    image: titanoboa-notebook
+        REF: ${REF:-vyper-0.4.0}
+    image: titanoboa-beta-notebook
     command: ["echo", "This image is started by Jupyter"]
 
   vypyter:
@@ -27,21 +27,21 @@ services:
       # Bind Docker volume on host for JupyterHub database and cookie secrets
       - "./data:/data"
 
-    image: jupyterhub
+    image: jupyterhub-beta
     # for child processes to connect to
     container_name: jupyterhub
     networks:
       - jupyterhub-network
 
     ports:
-      - "${PORT:-8000}:8000"
+      - "${PORT:-9000}:8000"
 
     env_file: .env
     environment:
       # All containers will join this network
       DOCKER_NETWORK_NAME: jupyterhub-network
       # JupyterHub will spawn this Notebook image for users
-      DOCKER_NOTEBOOK_IMAGE: titanoboa-notebook
+      DOCKER_NOTEBOOK_IMAGE: titanoboa-beta-notebook
       # Using this run command
       DOCKER_SPAWN_CMD: start-singleuser.sh
       # weird things happen when nesting docker containers
