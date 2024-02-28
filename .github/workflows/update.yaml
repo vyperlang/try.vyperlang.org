@@ -1,24 +1,30 @@
 name: Update
 
 on:
-  workflow_dispatch: {}
   schedule:
     # Run Monday at 4:00 UTC
     - cron: "0 4 * * 1"
+  workflow_dispatch:
+    inputs:
+     environment:
+        type: environment
+        description: Select the environment
+        default: stable
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: "Upgrade try.vyperlang.org"
+    name: "Upgrade dependencies"
 
     steps:
       - uses: actions/checkout@v4
       - name: Setup SSH
         uses: ./.github/workflows/setup-ssh
         with:
-          ssh-key: ${{ secrets.TRY_VYPER_KEY }}
-          username: ${{ secrets.TRY_VYPERLANG_USER }}
-          host-key: ${{ vars.TRY_VYPERLANG_HOSTKEY }}
+          ssh-key: ${{ secrets.AUTH_SSH_KEY }}
+          username: ${{ secrets.AUTH_SSH_USER }}
+          host-key: ${{ vars.HOST_PUBLIC_KEY }}
+          host-name: ${{ vars.HOST }}
       - name: Run command
         shell: bash
         run: |

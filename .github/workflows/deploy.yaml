@@ -1,12 +1,19 @@
 name: Deploy
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+     environment:
+        type: environment
+        description: Select the environment
+        required: true
 
 jobs:
   deploy:
+    name: "Deploy to ${{ inputs.environment }}"
+    environment:
+      name: ${{ inputs.environment }}
     runs-on: ubuntu-latest
-    name: "Deploy to try.vyperlang.org"
 
     steps:
       - uses: actions/checkout@v4
@@ -15,14 +22,20 @@ jobs:
       - name: Setup SSH
         uses: ./.github/workflows/setup-ssh
         with:
-          ssh-key: ${{ secrets.TRY_VYPER_KEY }}
-          username: ${{ secrets.TRY_VYPERLANG_USER }}
-          host-key: ${{ vars.TRY_VYPERLANG_HOSTKEY }}
+          ssh-key: ${{ secrets.AUTH_SSH_KEY }}
+          username: ${{ secrets.AUTH_SSH_USER }}
+          host-key: ${{ vars.HOST_PUBLIC_KEY }}
+          host-name: ${{ vars.HOST }}
       - name: Run command
         shell: bash
         run: |
-            git push --force try_vyper:try.vyperlang.org/
+            git push --force try_vyper:${{ vars.REPO_DIR }}/
             ssh try_vyper bash <<EOF
-            cd try.vyperlang.org
+            cd ${{ vars.REPO_DIR }}
+            # set env vars inside the SSH session
+            export REF=${{ vars.BOA_COMMIT_ISH }}
+            export PORT=${{ vars.PORT }}
+            export JUPYTERHUB_IMAGE_NAME=${{ vars.JUPYTERHUB_IMAGE_NAME }}
+            export NOTEBOOK_IMAGE_NAME=${{ vars.NOTEBOOK_IMAGE_NAME }}
             ./full_reload.sh
             EOF

@@ -1,15 +1,18 @@
 name: 'Setup SSH'
-description: 'Sets up the SSH key to connect to try.vyperlang.org'
+description: 'Sets up the SSH key to connect to ${{ inputs.host-name }}'
 
 inputs:
     ssh-key:
-      description: 'The SSH key to use to connect to try.vyperlang.org'
+      description: 'The SSH key to use to connect to ${{ inputs.host-name }}'
       required: true
     username:
-      description: 'The username to use to connect to try.vyperlang.org'
+      description: 'The username to use to connect to ${{ inputs.host-name }}'
       required: true
     host-key:
       description: 'The SSH public key of the host to connect to'
+      required: true
+    host-name:
+      description: 'The name of the host to connect to'
       required: true
 
 runs:
@@ -21,10 +24,10 @@ runs:
         mkdir -p ~/.ssh/
         echo "${{ inputs.ssh-key }}" > ~/.ssh/try_vyper.key
         chmod 600 ~/.ssh/try_vyper.key
-        echo "try.vyperlang.org ${{ inputs.host-key }}" | tee ~/.ssh/known_hosts
+        echo "${{ inputs.host-name }} ${{ inputs.host-key }}" | tee ~/.ssh/known_hosts
         cat >>~/.ssh/config <<END
         Host try_vyper
-          HostName try.vyperlang.org
+          HostName ${{ inputs.host-name }}
           User ${{ inputs.username }}
           IdentityFile ~/.ssh/try_vyper.key
         END
