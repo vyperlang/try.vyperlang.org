@@ -2,18 +2,18 @@ name: 'Setup SSH'
 description: 'Sets up the SSH key to connect to ${{ inputs.host-name }}'
 
 inputs:
-    ssh-key:
-      description: 'The SSH key to use to connect to ${{ inputs.host-name }}'
-      required: true
-    username:
-      description: 'The username to use to connect to ${{ inputs.host-name }}'
-      required: true
-    host-key:
-      description: 'The SSH public key of the host to connect to'
-      required: true
-    host-name:
-      description: 'The name of the host to connect to'
-      required: true
+  ssh-key:
+    description: 'The SSH key to use to connect to ${{ inputs.host-name }}'
+    required: true
+  username:
+    description: 'The username to use to connect to ${{ inputs.host-name }}'
+    required: true
+  host-key:
+    description: 'The SSH public key of the host to connect to'
+    required: true
+  host-name:
+    description: 'The name of the host to connect to'
+    required: true
 
 runs:
   using: 'composite'
