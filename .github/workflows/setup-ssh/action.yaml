@@ -24,7 +24,7 @@ runs:
         mkdir -p ~/.ssh/
         echo "${{ inputs.ssh-key }}" > ~/.ssh/try_vyper.key
         chmod 600 ~/.ssh/try_vyper.key
-        echo "${{ inputs.host-name }} ${{ inputs.host-key }}" | tee ~/.ssh/known_hosts
+        echo "${{ inputs.host-name }} ${{ inputs.host-key }}" > ~/.ssh/known_hosts
         cat >>~/.ssh/config <<END
         Host try_vyper
           HostName ${{ inputs.host-name }}
