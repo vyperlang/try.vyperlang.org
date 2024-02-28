@@ -1,32 +1,35 @@
 name: Restart
 
 on:
-  workflow_dispatch: {}
   schedule:
     # Run every day at 5:00 UTC
     - cron: "0 5 * * *"
+  workflow_dispatch:
+    inputs:
+     environment:
+        type: environment
+        description: Select the environment
+        default: stable
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: "Restart try.vyperlang.org"
+    name: "Restart ${{ inputs.environment }}"
 
     steps:
       - uses: actions/checkout@v4
       - name: Setup SSH
         uses: ./.github/workflows/setup-ssh
         with:
-          ssh-key: ${{ secrets.TRY_VYPER_KEY }}
-          username: ${{ secrets.TRY_VYPERLANG_USER }}
-          host-key: ${{ vars.TRY_VYPERLANG_HOSTKEY }}
-          # do not use environments as GitHub marks every use as a deployment
-          host-name: try.vyperlang.org
+          ssh-key: ${{ secrets.AUTH_SSH_KEY }}
+          username: ${{ secrets.AUTH_SSH_USER }}
+          host-key: ${{ vars.HOST_PUBLIC_KEY }}
+          host-name: ${{ vars.HOST }}
       - name: Run command
         shell: bash
         run: |
             ssh try_vyper bash <<EOF
-            cd ~/try.vyperlang.org
-            ./restart.sh
-            cd ~/beta.vyperlang.org
-            ./restart.sh
+            cd ${{ vars.REPO_DIR || 'try.vyperlang.org' }}
+            docker compose down
+            docker compose up --detach
             EOF

@@ -6,6 +6,7 @@ on:
      environment:
         type: environment
         description: Select the environment
+        required: true
 
 jobs:
   deploy:
@@ -21,15 +22,18 @@ jobs:
       - name: Setup SSH
         uses: ./.github/workflows/setup-ssh
         with:
-          ssh-key: ${{ secrets.TRY_VYPER_KEY }}
-          username: ${{ secrets.TRY_VYPERLANG_USER }}
-          host-key: ${{ vars.TRY_VYPERLANG_HOSTKEY }}
-          host-name: ${{ vars.TRY_VYPERLANG_HOST }}
+          ssh-key: ${{ secrets.AUTH_SSH_KEY }}
+          username: ${{ secrets.AUTH_SSH_USER }}
+          host-key: ${{ vars.HOST_PUBLIC_KEY }}
+          host-name: ${{ vars.HOST }}
       - name: Run command
         shell: bash
         run: |
-            git push --force try_vyper:${{ vars.TRY_VYPERLANG_HOST }}/
+            git push --force try_vyper:${{ vars.REPO_DIR || 'try.vyperlang.org' }}/
             ssh try_vyper bash <<EOF
-            cd ${{ vars.TRY_VYPERLANG_HOST }}
+            cd ${{ vars.REPO_DIR || 'try.vyperlang.org' }}
+            export REF=${{ vars.BOA_BRANCH || 'master' }}
+            export JUPYTERHUB_IMAGE_NAME=${{ vars.JUPYTERHUB_IMAGE_NAME || 'jupyterhub' }}
+            export NOTEBOOK_IMAGE_NAME=${{ vars.NOTEBOOK_IMAGE_NAME || 'titanoboa-notebook' }}
             ./full_reload.sh
             EOF
