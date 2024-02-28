@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
             ssh try_vyper bash <<EOF
-            cd ${{ vars.REPO_DIR || 'try.vyperlang.org' }}
+            cd ${{ vars.REPO_DIR }}
             docker compose down
             docker compose up --detach
             EOF

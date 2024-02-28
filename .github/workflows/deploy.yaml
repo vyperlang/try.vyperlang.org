@@ -29,11 +29,11 @@ jobs:
       - name: Run command
         shell: bash
         run: |
-            git push --force try_vyper:${{ vars.REPO_DIR || 'try.vyperlang.org' }}/
+            git push --force try_vyper:${{ vars.REPO_DIR }}/
             ssh try_vyper bash <<EOF
-            cd ${{ vars.REPO_DIR || 'try.vyperlang.org' }}
-            export REF=${{ vars.BOA_BRANCH || 'master' }}
-            export JUPYTERHUB_IMAGE_NAME=${{ vars.JUPYTERHUB_IMAGE_NAME || 'jupyterhub' }}
-            export NOTEBOOK_IMAGE_NAME=${{ vars.NOTEBOOK_IMAGE_NAME || 'titanoboa-notebook' }}
+            cd ${{ vars.REPO_DIR }}
+            export REF=${{ vars.BOA_BRANCH }}
+            export JUPYTERHUB_IMAGE_NAME=${{ vars.JUPYTERHUB_IMAGE_NAME }}
+            export NOTEBOOK_IMAGE_NAME=${{ vars.NOTEBOOK_IMAGE_NAME }}
             ./full_reload.sh
             EOF
