@@ -1,7 +1,7 @@
 # Vyper JupyterHub
 Hosted at [try.vyperlang.org](https://try.vyperlang.org)
 
-This project uses Docker to manage its services. The `docker compose.yaml` file defines the services that make up your app so they can be run together in an isolated environment.
+This project uses Docker to manage its services. The `docker-compose.yaml` file defines the services that make up your app so they can be run together in an isolated environment.
 
 ## Docker compose services
 
@@ -11,7 +11,7 @@ The project consists of two main services:
 This image is not run as a service but is used by the `vypyter` service.
 
 2. `vypyter`: This service is built from the `jupyterhub.Dockerfile` and depends on the `notebook-image` service.
-It exposes port 8000 and uses environment variables defined in the `.env` file and additional ones defined in the `docker compose.yaml` file.
+It exposes port 8000 and uses environment variables defined in the `.env` file and additional ones defined in the `docker-compose.yaml` file.
 
 ## Getting Started
 
