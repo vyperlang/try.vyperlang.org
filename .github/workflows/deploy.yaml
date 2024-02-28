@@ -32,6 +32,7 @@ jobs:
             git push --force try_vyper:${{ vars.REPO_DIR }}/
             ssh try_vyper bash <<EOF
             cd ${{ vars.REPO_DIR }}
+            # set env vars inside the SSH session
             export REF=${{ vars.BOA_BRANCH }}
             export JUPYTERHUB_IMAGE_NAME=${{ vars.JUPYTERHUB_IMAGE_NAME }}
             export NOTEBOOK_IMAGE_NAME=${{ vars.NOTEBOOK_IMAGE_NAME }}
