@@ -31,6 +31,7 @@ jobs:
         run: |
             git push --force try_vyper:${{ vars.REPO_DIR }}/
             ssh try_vyper bash <<EOF
+            set -Eeuxo pipefail
             cd ${{ vars.REPO_DIR }}
             # set env vars inside the SSH session
             export REF=${{ vars.BOA_COMMIT_ISH }}
