@@ -1,9 +1,6 @@
 name: Restart
 
 on:
-  schedule:
-    # Run every day at 5:00 UTC
-    - cron: "0 5 * * *"
   workflow_dispatch:
     inputs:
      environment:

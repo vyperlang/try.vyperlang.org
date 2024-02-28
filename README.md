@@ -40,3 +40,24 @@ Run the command `docker compose up` to start it in the foreground, or `docker co
     The default is `8000`.
 
 5. The `vypyter` service should now be running and accessible at `http://localhost:8000`.
+
+## GitHub Actions
+In order to run the GitHub Actions, you need to add the following secrets to your repository:
+- `AUTH_SSH_USER`: The username used to authenticate with the server.
+- `AUTH_SSH_KEY`: The private SSH key used to authenticate with the server.
+
+Also, you need to add the following (environment) action variables to your repository:
+- `HOST`: The hostname of the server.
+- `HOST_PUBLIC_KEY`: The public SSH key used to authenticate with the server.
+  This is used to verify the server's identity when connecting via SSH.
+  You can find the public key by calling `ssh-keyscan`.
+- `REPO_DIR`: The directory where the repository is be cloned on the server.
+    For example, `~/try.vyperlang.org`.
+- `BOA_COMMIT_ISH`: The commit-ish to checkout on the server.
+    By default, `master`.
+- `PORT`: The port to expose the JupyterHub on the server.
+    By default, `8000`.
+- `JUPYTERHUB_IMAGE_NAME`: Optional environment variable to specify the name of the JupyterHub image.
+    By default, `jupyterhub`. 
+- `NOTEBOOK_IMAGE_NAME`: Optional environment variable to specify the name of the notebook image.
+    By default, `titanoboa-notebook`.
