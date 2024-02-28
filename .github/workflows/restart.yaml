@@ -1,4 +1,4 @@
-name: Restart
+name: restart
 
 on:
   workflow_dispatch:
