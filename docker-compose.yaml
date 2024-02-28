@@ -34,7 +34,7 @@ services:
       - jupyterhub-network
 
     ports:
-      - "${PORT:-9000}:8000"
+      - "${PORT:-8000}:8000"
 
     env_file: .env
     environment:
