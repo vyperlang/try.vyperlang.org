@@ -1,4 +1,4 @@
-name: Restart ${{ inputs.environment }}
+name: restart
 
 on:
   workflow_dispatch:

@@ -1,4 +1,4 @@
-name: Update ${{ inputs.environment }}
+name: update
 
 on:
   schedule:
