@@ -1,4 +1,4 @@
-name: Update
+name: Update ${{ inputs.environment }}
 
 on:
   schedule:
@@ -31,4 +31,5 @@ jobs:
             ssh try_vyper bash <<EOF
             apt-get update
             apt-get upgrade -y
+            docker system prune --force --all --volumes
             EOF
