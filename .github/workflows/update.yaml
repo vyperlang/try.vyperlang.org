@@ -13,8 +13,10 @@ on:
 
 jobs:
   deploy:
+    name: "Update dependencies of ${{ inputs.environment }}"
+    environment:
+      name: ${{ inputs.environment }}
     runs-on: ubuntu-latest
-    name: "Upgrade dependencies"
 
     steps:
       - uses: actions/checkout@v4
