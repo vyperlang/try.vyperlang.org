@@ -85,7 +85,7 @@ c.DockerSpawner.remove = True
 c.DockerSpawner.debug = True
 
 c.DockerSpawner.cpu_limit = 1
-#c.DockerSpawner.mem_limit = "128M"
+c.DockerSpawner.mem_limit = "512M"
 
 # User containers will access hub by container name on the Docker network
 c.JupyterHub.hub_ip = "0.0.0.0"
