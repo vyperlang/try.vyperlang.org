@@ -10,6 +10,10 @@ import oauthenticator.github
 c.JupyterHub.authenticator_class = oauthenticator.github.GitHubOAuthenticator
 c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
 c.GitHubOAuthenticator.allow_all = True  # https://github.com/jupyterhub/oauthenticator/pull/625
+c.GitHubOAuthenticator.blocked_users = {
+    "rafli092001",
+    "dancooper1958",
+}
 
 
 # Persist hub data on volume mounted inside container
