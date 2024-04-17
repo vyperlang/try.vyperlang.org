@@ -9,6 +9,8 @@ services:
       args:
         FORK: ${FORK:-vyperlang}
         REF: ${REF:-master}
+        ZKSYNC_FORK: ${ZKSYNC_FORK:-DanielSchiavini}
+        ZKSYNC_REF: ${ZKSYNC_REF:-main}
     image: ${NOTEBOOK_IMAGE_NAME:-titanoboa-notebook}
     command: ["echo", "This image is started by Jupyter"]
 
