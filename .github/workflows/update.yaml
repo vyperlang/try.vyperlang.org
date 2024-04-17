@@ -4,18 +4,11 @@ on:
   schedule:
     # Run Monday at 4:00 UTC
     - cron: "0 4 * * 1"
-  workflow_dispatch:
-    inputs:
-     environment:
-        type: environment
-        description: Select the environment
-        default: stable
 
 jobs:
   deploy:
-    name: "Update dependencies of ${{ inputs.environment }}"
-    environment:
-      name: ${{ inputs.environment }}
+    name: "Update dependencies"
+    environment: stable
     runs-on: ubuntu-latest
 
     steps:
