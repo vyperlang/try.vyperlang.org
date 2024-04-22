@@ -89,8 +89,7 @@ c.DockerSpawner.remove = True
 c.DockerSpawner.debug = True
 
 c.DockerSpawner.cpu_limit = 1
-# for some reason, enabling mem limit makes spawned containers not work
-#c.DockerSpawner.mem_limit = "512"
+c.DockerSpawner.mem_limit = lambda s: '8M' if s.user.name in c.GitHubOAuthenticator.blocked_users else "2G"
 
 # User containers will access hub by container name on the Docker network
 c.JupyterHub.hub_ip = "0.0.0.0"
