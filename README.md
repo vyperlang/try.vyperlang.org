@@ -15,6 +15,7 @@ It exposes port 8000 and uses environment variables defined in the `.env` file a
 
 ## Getting Started
 
+### Running locally
 To run the project locally, you need to follow these steps:
 
 1. Ensure Docker and Docker Compose are installed on your machine. If not, you can download them from the official Docker website.
@@ -40,6 +41,12 @@ Run the command `docker compose up` to start it in the foreground, or `docker co
     The default is `8000`.
 
 5. The `vypyter` service should now be running and accessible at `http://localhost:8000`.
+
+### Deploying to a server
+
+If you want to deploy the JupyterHub to a server, please read the following article:
+[Deploy your own Vyper JupyterLab notebook server
+](https://medium.com/@daniel.schiavini/deploy-your-own-vyper-jupyterlab-notebook-server-a3b00184be20).
 
 ## GitHub Actions
 In order to run the GitHub Actions, you need to add the following secrets to your repository:
